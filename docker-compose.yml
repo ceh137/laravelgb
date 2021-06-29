@@ -1,0 +1,72 @@
+version: "3.8"
+services:
+    mysql:
+        image: mysql:8
+        container_name: gb-db
+        working_dir: /var/www/geekbrains-tutorial
+        volumes:
+            - ./:/var/www/geekbrains-tutorial
+            - mysql:/var/lib/mysql
+        environment:
+            - MYSQL_ROOT_PASSWORD=root
+            - MYSQL_DATABASE=geekbrains_tutorial
+        ports:
+            - 12223:3306
+        restart: unless-stopped
+        networks:
+          - default
+
+    nginx:
+        build: docker/nginx
+        container_name: gb-nginx
+        user: root
+        working_dir: /var/www/geekbrains-tutorial
+        volumes:
+            - ./:/var/www/geekbrains-tutorial
+            - ./docker/nginx/nginx.conf:/etc/nginx/conf.d/default.conf
+        ports:
+            - 15002:1501
+        depends_on:
+            - php-fpm
+        restart: unless-stopped
+        networks:
+          - default
+
+    php-fpm:
+        build: docker/php-fpm
+        container_name: gb-php
+        working_dir: /var/www/geekbrains-tutorial
+        ports:
+            - 6003:6003
+        volumes:
+            - ./:/var/www/geekbrains-tutorial
+            - ./docker/php-fpm/php-ini-overrides.ini:/etc/php/7.4/fpm/conf.d/99-overrides.ini
+        depends_on:
+            - mysql
+        restart: unless-stopped
+        networks:
+          - default
+    phpmyadmin:
+        build:
+          context: .
+          dockerfile: PHPMYADMIN.Dockerfile
+        restart: always
+        links:
+          - mysql
+        ports:
+          - 8000:80
+        environment:
+          - PMA_ARBITRARY=1
+        networks:
+          - default
+
+
+volumes:
+    mysql:
+    db:
+
+    # networks:
+    #   default:
+    #     driver: bridge
+    # second_default:
+    #   external: true
