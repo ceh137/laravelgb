@@ -7,7 +7,7 @@
                     <div class="post-preview">
                         <a href="{{ route('news.single' , ['id' => $key]) }}">
                             <h2 class="post-title">{{ $news['title'] }}</h2>
-                            <h3 class="post-subtitle">Категория {{ $news['cat'] }}</h3>
+                            <h3 class="post-subtitle">Category {{ $news['cat'] }}</h3>
                         </a>
                         <p class="post-meta">
                             Posted by
@@ -17,7 +17,7 @@
                     </div>
                     <hr class="my-4" />
                 @empty
-                    <h3 class="text-center">Записей Нет</h3>
+                    <h3 class="text-center">Nothing to show</h3>
                     <!-- Divider-->
                 @endforelse
 

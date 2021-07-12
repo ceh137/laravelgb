@@ -60,12 +60,13 @@
                                         </td>
                                     </tr>
                                     @empty
-                                        <tr>
-                                            <td colspan="6">Нет записей</td>
+                                        <tr class="my-5">
+                                            <td colspan="6">Nothing to show</td>
                                         </tr>
                                     @endforelse
                                     </tbody>
                                 </table>
+                                <a href="{{ route('admin.categories.create') }}" class="btn btn-success">Add Category</a>
                             </div>
                         </div>
                     </div>

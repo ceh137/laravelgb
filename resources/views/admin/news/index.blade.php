@@ -61,11 +61,12 @@
                                         </tr>
                                     @empty
                                         <tr>
-                                            <td colspan="6">Нет записей</td>
+                                            <td colspan="6">Nothing to show</td>
                                         </tr>
                                     @endforelse
                                     </tbody>
                                 </table>
+                                <a href="{{ route('admin.news.create') }}" class="btn btn-success">Add news</a>
                             </div>
                         </div>
                     </div>

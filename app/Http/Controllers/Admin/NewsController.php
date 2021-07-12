@@ -24,7 +24,7 @@ class NewsController extends Controller
      */
     public function create()
     {
-        //
+        return view("admin.news.create", ['categories' => $this->getCategories()]);
     }
 
     /**
@@ -35,7 +35,8 @@ class NewsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        file_put_contents("data_news.txt", json_encode($request->except('_token'))."\n", FILE_APPEND);
+
     }
 
     /**
