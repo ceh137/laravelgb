@@ -33,13 +33,13 @@
                                     </th>
                                     </thead>
                                     <tbody>
-                                    @forelse($categoryList as $key => $category)
+                                    @forelse($categoryList as $category)
                                     <tr>
                                         <td>
-                                            {{ $key }}
+                                            {{ $category->category_id }}
                                         </td>
                                         <td>
-                                            {{ $category['title'] }}
+                                            {{ $category->name }}
                                         </td>
                                         <td>
 
@@ -48,13 +48,13 @@
                                             Me
                                         </td>
                                         <td class="text-primary">
-                                            {{ now() }}
+                                            {{ $category->created_at }}
                                         </td>
                                         <td class="td-actions text-left">
-                                            <a href="{{ route('admin.categories.update',  ['category' => $key]) }}" type="button" rel="tooltip" title="Edit Task" class="btn btn-primary btn-link btn-sm">
+                                            <a href="{{ route('admin.categories.update',  ['category' => $category->category_id]) }}" type="button" rel="tooltip" title="Edit Task" class="btn btn-primary btn-link btn-sm">
                                                 <i class="material-icons">edit</i>
                                             </a>
-                                            <a href="{{ route('admin.categories.destroy', ['category' => $key]) }}" type="button" rel="tooltip" title="Remove" class="btn btn-danger btn-link btn-sm">
+                                            <a href="{{ route('admin.categories.destroy', ['category' => $category->category_id]) }}" type="button" rel="tooltip" title="Remove" class="btn btn-danger btn-link btn-sm">
                                                 <i class="material-icons">delete</i>
                                             </a>
                                         </td>

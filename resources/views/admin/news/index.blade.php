@@ -33,13 +33,13 @@
                                     </th>
                                     </thead>
                                     <tbody>
-                                    @forelse($newsList as $key => $news)
+                                    @forelse($newsList as $news)
                                         <tr>
                                             <td>
-                                                {{ $key }}
+                                                {{ $news->news_id }}
                                             </td>
                                             <td>
-                                                {{ $news['title'] }}
+                                                {{ $news->title }}
                                             </td>
                                             <td>
 
@@ -51,10 +51,10 @@
                                                 {{ now() }}
                                             </td>
                                             <td class="td-actions text-left">
-                                                <a href="{{ route('admin.news.update',  ['news' => $key]) }}"  rel="tooltip" title="Edit Task" class="btn btn-primary btn-link btn-sm">
+                                                <a href="{{ route('admin.news.update',  ['news' => $news->news_id]) }}"  rel="tooltip" title="Edit Task" class="btn btn-primary btn-link btn-sm">
                                                     <i class="material-icons">edit</i>
                                                 </a>
-                                                <a href="{{ route('admin.news.destroy', ['news' => $key]) }}"  rel="tooltip" title="Remove" class="btn btn-danger btn-link btn-sm">
+                                                <a href="{{ route('admin.news.destroy', ['news' =>  $news->news_id]) }}"  rel="tooltip" title="Remove" class="btn btn-danger btn-link btn-sm">
                                                     <i class="material-icons">delete</i>
                                                 </a>
                                             </td>

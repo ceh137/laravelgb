@@ -2,16 +2,19 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
+use App\Models\News;
 use Illuminate\Http\Request;
 
 class CategoriesController extends Controller
 {
     public function index() {
-        return view('categories.index', ['categoryList' => $this->getCategories()]);
+        $categoryModel = new Category();
+        return view('categories.index', ['categoryList' => $categoryModel->GetCategoriesAll()]);
     }
 
     public function news_from_category(int $cat_id) {
-
-        return view('news.index', ['newsList' => $this->getNews($cat_id)]);
+        $newsModel = new News();
+        return view('news.index', ['newsList' => $newsModel->getNewsFromCat($cat_id)]);
     }
 }

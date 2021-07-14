@@ -3,11 +3,11 @@
     <div class="container px-4 px-lg-5">
         <div class="row gx-4 gx-lg-5 justify-content-center">
             <div class="col-md-10 col-lg-8 col-xl-7">
-                @forelse($newsList as $key => $news)
+                @forelse($newsList as  $news)
                     <div class="post-preview">
-                        <a href="{{ route('news.single' , ['id' => $key]) }}">
-                            <h2 class="post-title">{{ $news['title'] }}</h2>
-                            <h3 class="post-subtitle">Category {{ $news['cat'] }}</h3>
+                        <a href="{{ route('news.single' , ['id' => $news->news_id]) }}">
+                            <h2 class="post-title">{{ $news->title }}</h2>
+                            <h3 class="post-subtitle">Category {{ $news->categoryName }}</h3>
                         </a>
                         <p class="post-meta">
                             Posted by

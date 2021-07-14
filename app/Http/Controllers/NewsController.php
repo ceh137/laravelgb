@@ -2,15 +2,19 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\News;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 
 class NewsController extends Controller
 {
     public function index() {
-        return view('news.index', ['newsList' => $this->getAllNews()]);
+        $newsModel = new News();
+        return view('news.index', ['newsList' => $newsModel->getNews()]);
     }
 
     public function article($art_id) {
-        return view('news.single', ['article' => $this->getSingleArticle($art_id)]);
+        $newsModel = new News();
+        return view('news.single', ['article' => $newsModel->getNewsByID($art_id)]);
     }
 }
