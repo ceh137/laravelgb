@@ -5,12 +5,12 @@
             <div class="col-md-10 col-lg-8 col-xl-7">
                 @forelse($newsList as  $news)
                     <div class="post-preview">
-                        <a href="{{ route('news.single' , ['id' => $news->news_id]) }}">
+                        <a href="{{ route('news.single' , ['news' => $news]) }}">
                             <h2 class="post-title">{{ $news->title }}</h2>
-                            <h3 class="post-subtitle">Category {{ $news->categoryName }}</h3>
+                            <h5 class="post-subtitle">Category <strong>{{ $news->category->name }}</strong></h5>
                         </a>
                         <p class="post-meta">
-                            Posted by
+                            Posted by  {{ optional($news)->author }}
                             <a href="#!">Start Bootstrap</a>
                             on September 24, 2021
                         </p>

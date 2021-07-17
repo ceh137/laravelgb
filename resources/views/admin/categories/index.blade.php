@@ -1,5 +1,6 @@
 @extends('layouts.admin')
 @section('content')
+
     <div class="content">
         <div class="container-fluid">
             <div class="row">
@@ -10,6 +11,7 @@
                             <p class="card-category">Here you can see all the categories on the website</p>
                         </div>
                         <div class="card-body">
+                            @include('admin.components.success')
                             <div class="table-responsive">
                                 <table class="table">
                                     <thead class=" text-primary">
@@ -23,42 +25,46 @@
                                         Desc
                                     </th>
                                     <th>
-                                        Made By
+                                        Posts count
                                     </th>
                                     <th>
-                                        Post
+                                        Updated
                                     </th>
                                     <th>
                                         Action
                                     </th>
                                     </thead>
                                     <tbody>
+
                                     @forelse($categoryList as $category)
+
                                     <tr>
                                         <td>
-                                            {{ $category->category_id }}
+                                            {{ $category->id }}
                                         </td>
                                         <td>
                                             {{ $category->name }}
                                         </td>
                                         <td>
-
+                                            {{ $category->desc }}
                                         </td>
                                         <td>
-                                            Me
+                                            {{ count($category->news) }}
                                         </td>
                                         <td class="text-primary">
-                                            {{ $category->created_at }}
+                                            {{ $category->updated_at }}
                                         </td>
                                         <td class="td-actions text-left">
-                                            <a href="{{ route('admin.categories.update',  ['category' => $category->category_id]) }}" type="button" rel="tooltip" title="Edit Task" class="btn btn-primary btn-link btn-sm">
+
+                                            <a href="{{ route('admin.categories.edit', $category) }}" type="button" rel="tooltip" title="Edit Task" class="btn btn-primary btn-link btn-sm">
                                                 <i class="material-icons">edit</i>
                                             </a>
-                                            <a href="{{ route('admin.categories.destroy', ['category' => $category->category_id]) }}" type="button" rel="tooltip" title="Remove" class="btn btn-danger btn-link btn-sm">
+                                            <a href="{{ route('admin.categories.destroy', $category) }}" type="button" rel="tooltip" title="Remove" class="btn btn-danger btn-link btn-sm">
                                                 <i class="material-icons">delete</i>
                                             </a>
                                         </td>
                                     </tr>
+
                                     @empty
                                         <tr class="my-5">
                                             <td colspan="6">Nothing to show</td>
@@ -68,6 +74,11 @@
                                 </table>
                                 <a href="{{ route('admin.categories.create') }}" class="btn btn-success">Add Category</a>
                             </div>
+                            <div class="float-right mt-3 mx-2">
+                                {{ $categoryList->links() }}
+                            </div>
+
+
                         </div>
                     </div>
                 </div>

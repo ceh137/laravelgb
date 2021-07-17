@@ -20,13 +20,13 @@
                                         Title
                                     </th>
                                     <th>
-                                        Desc
+                                        Category
                                     </th>
                                     <th>
-                                        Made By
+                                        Status
                                     </th>
                                     <th>
-                                        Post
+                                        Post by
                                     </th>
                                     <th>
                                         Action
@@ -36,38 +36,44 @@
                                     @forelse($newsList as $news)
                                         <tr>
                                             <td>
-                                                {{ $news->news_id }}
+                                                {{ $news->id }}
                                             </td>
                                             <td>
                                                 {{ $news->title }}
                                             </td>
                                             <td>
-
+                                                {{ $news->category->name }}
                                             </td>
                                             <td>
-                                                Me
+                                                {{ $news->status->news_status_name }}
                                             </td>
                                             <td class="text-primary">
-                                                {{ now() }}
+                                                {{ $news->updated_at }}
                                             </td>
                                             <td class="td-actions text-left">
-                                                <a href="{{ route('admin.news.update',  ['news' => $news->news_id]) }}"  rel="tooltip" title="Edit Task" class="btn btn-primary btn-link btn-sm">
+                                                <a href="{{ route('admin.news.edit',  ['news' => $news]) }}"  rel="tooltip" title="Edit Task" class="btn btn-primary btn-link btn-sm">
                                                     <i class="material-icons">edit</i>
                                                 </a>
-                                                <a href="{{ route('admin.news.destroy', ['news' =>  $news->news_id]) }}"  rel="tooltip" title="Remove" class="btn btn-danger btn-link btn-sm">
+                                                <a href="{{ route('admin.news.destroy', ['news' =>  $news]) }}"  rel="tooltip" title="Remove" class="btn btn-danger btn-link btn-sm">
                                                     <i class="material-icons">delete</i>
                                                 </a>
                                             </td>
                                         </tr>
+
                                     @empty
                                         <tr>
                                             <td colspan="6">Nothing to show</td>
                                         </tr>
+
                                     @endforelse
                                     </tbody>
                                 </table>
                                 <a href="{{ route('admin.news.create') }}" class="btn btn-success">Add news</a>
                             </div>
+                            <div class="float-right mt-3 mx-2">
+                                {{ $newsList->links() }}
+                            </div>
+
                         </div>
                     </div>
                 </div>

@@ -5,23 +5,27 @@ namespace App\Models;
 
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class News extends Model
 {
     protected $table = 'news';
 
-    public function getNews(): object
+    protected $fillable = [
+        'title',
+        'article',
+        'status_id',
+        'category_id',
+    ];
+
+    public  function category(): BelongsTo
     {
-        return \DB::table($this->table)->select(['news_id', 'title', 'news.category_id as categoryId', 'categories.name as categoryName'])->leftJoin('categories', 'news.category_id', '=', 'categories.category_id')->get();
+        return $this->belongsTo(Category::class, 'category_id', 'id');
     }
 
-    public function getNewsByID(int $id): object
+    public function status(): BelongsTo
     {
-        return \DB::table($this->table)->select(['title', 'news_id', 'news.category_id as categoryId', 'categories.name as categoryName', 'article', 'news.created_at as newsCreatedAt'])->leftJoin('categories', 'news.category_id', '=', 'categories.category_id')->where('news_id', '=', $id)->first();
-    }
-
-    public function getNewsFromCat($cat_id)
-    {
-        return \DB::table($this->table)->select(['news_id', 'title', 'news.category_id as categoryId', 'categories.name as categoryName'])->leftJoin('categories', 'news.category_id', '=', 'categories.category_id')->where('news.category_id', '=', $cat_id)->get();
+        return $this->belongsTo(NewsStatus::class, 'status_id', 'id');
     }
 }

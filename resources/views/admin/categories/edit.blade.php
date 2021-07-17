@@ -10,13 +10,14 @@
                             <p class="card-category">Here you can create new category</p>
                         </div>
                         <div class=" mx-auto p-5">
-                            <form method="post" action="{{ route('admin.categories.store') }}">
+                            <form method="post" action="{{ route('admin.categories.update', $category) }}">
                                 @csrf
+                                @method('put')
                                 <div class="form-group my-5">
-                                    <input type="text" name="name" class="form-control" placeholder="Title">
+                                    <input type="text" name="name" class="form-control" value="{{ $category->name }}" placeholder="Title">
                                 </div>
                                 <div class="form-group my-5">
-                                    <textarea type="text" name="desc" class="form-control" placeholder="Description"></textarea>
+                                    <textarea type="text" name="desc" class="form-control" placeholder="Description">{{ $category->desc }}</textarea>
                                 </div>
 
 
@@ -29,6 +30,3 @@
         </div>
     </div>
 @endsection
-
-
-

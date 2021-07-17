@@ -27,7 +27,7 @@ Route::group(['prefix'  => 'admin', 'as' => 'admin.'], function () {
 } );
 
 Route::get('/', [CategoriesController::class, 'index'])->name('categories');
-Route::get('/categories/{cat_id}/news', [CategoriesController::class, 'news_from_category'])->name('cat.news');
+Route::get('/categories/{category}/news', [CategoriesController::class, 'news_from_category'])->name('cat.news');
 
 Route::get('/news', [NewsController::class, 'index'])->name('news');
-Route::get('/news/{id}', [NewsController::class, 'article'])->name('news.single');
+Route::get('/news/{news}', [NewsController::class, 'article'])->name('news.single');

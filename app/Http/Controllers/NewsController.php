@@ -9,12 +9,12 @@ use Illuminate\Http\Request;
 class NewsController extends Controller
 {
     public function index() {
-        $newsModel = new News();
-        return view('news.index', ['newsList' => $newsModel->getNews()]);
+        $news = News::with('category')->get();
+        return view('news.index', ['newsList' => $news]);
     }
 
-    public function article($art_id) {
-        $newsModel = new News();
-        return view('news.single', ['article' => $newsModel->getNewsByID($art_id)]);
+    public function article(News $news) {
+        $news = News::all()->find($news->id);
+        return view('news.single', ['article' => $news]);
     }
 }

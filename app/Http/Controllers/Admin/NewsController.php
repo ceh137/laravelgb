@@ -3,41 +3,56 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Category;
 use App\Models\News;
+use App\Models\NewsStatus;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class NewsController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
     public function index()
     {
-        $newsModel = new News();
-        return view('admin.news.index', ['newsList' => $newsModel->getNews()]);
+        $news = News::with('category')->orderBy('updated_at', 'desc')->paginate(20);
+        return view('admin.news.index', ['newsList' => $news]);
     }
 
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
     public function create()
     {
-        return view("admin.news.create", ['categories' => $this->getCategories()]);
+        return view("admin.news.create", ['categories' => Category::select('id', 'name')->get()]);
     }
 
     /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function store(Request $request)
     {
-        file_put_contents("data_news.txt", json_encode($request->except('_token'))."\n", FILE_APPEND);
+        $news = new News();
+        $news->title = $request->title;
+        $news->article = $request->article;
+        $news->status_id = $request->status_id;
+        $news->category_id = $request->category;
+        $news->source_id = $request->source;
+
+        if ($news->save())
+        {
+            return redirect()->route('admin.news.index')->with('success', 'Запись с ID = '.$news->id.' была успешно добавлена');
+        }
+        return redirect()->route('admin.news.index')->with('success', 'Ошибка');
 
     }
 
@@ -45,7 +60,7 @@ class NewsController extends Controller
      * Display the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function show($id)
     {
@@ -55,12 +70,16 @@ class NewsController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param News $news
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
-    public function edit($id)
+    public function edit(News $news)
     {
-        //
+        return view('admin.news.edit', [
+            'news' => $news,
+            'categories' => Category::all(),
+            'statuses' => NewsStatus::all()
+        ]);
     }
 
     /**
@@ -68,18 +87,29 @@ class NewsController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, News $news)
     {
-        //
+
+        $news->title = $request->title;
+        $news->article = $request->article;
+        $news->status_id = $request->status_id;
+        $news->category_id = $request->category_id;
+        $news->source_id = $request->source_id;
+
+        if ($news->save())
+        {
+            return redirect()->route('admin.news.index')->with('success', 'Запись с ID = '.$news->id.' была успешно обновлена');
+        }
+        return redirect()->route('admin.news.index')->with('success', 'Ошибка, запись не была обновлена');
     }
 
     /**
      * Remove the specified resource from storage.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function destroy($id)
     {

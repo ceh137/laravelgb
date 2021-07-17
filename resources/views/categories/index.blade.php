@@ -5,7 +5,7 @@
             <div class="col-md-10 col-lg-8 col-xl-7">
                 @forelse($categoryList as $category)
                 <div class="post-preview">
-                    <a href="{{ route('cat.news', ['cat_id' => $category->category_id]) }}">
+                    <a href="{{ route('cat.news', ['category' => $category]) }}">
                         <h2 class="post-title">{{ $category->name }}</h2>
                         <h3 class="post-subtitle">Problems look mighty small from 150 miles up</h3>
                     </a>
