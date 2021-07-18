@@ -54,7 +54,7 @@
                                                 <a href="{{ route('admin.news.edit',  ['news' => $news]) }}"  rel="tooltip" title="Edit Task" class="btn btn-primary btn-link btn-sm">
                                                     <i class="material-icons">edit</i>
                                                 </a>
-                                                <a href="{{ route('admin.news.destroy', ['news' =>  $news]) }}"  rel="tooltip" title="Remove" class="btn btn-danger btn-link btn-sm">
+                                                <a href="javascript:" data-newsId = '{{ $news->id }}'   rel="tooltip" title="Remove" class="btn btn-danger btn-link btn-sm delete">
                                                     <i class="material-icons">delete</i>
                                                 </a>
                                             </td>
@@ -81,4 +81,26 @@
         </div>
     </div>
 @endsection
+@push('js')
+    <script>
+        $(function () {
+            $('.delete').on('click', function () {
+                console.log("Gjkexbk");
+                if (confirm("Confirm delete ?")) {
+                    $.ajax({
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        type: 'DELETE',
+                        url: 'admin/news'+$(this).data('newsId'),
+                        complete: function ()  {
+                            alert("News with id  = "+$(this).data('newsId')+ " was deleted");
+                            location.reload();
+                        }
+                    })
+                }
+            })
+        })
+    </script>
+@endpush
 

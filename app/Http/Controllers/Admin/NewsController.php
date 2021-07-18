@@ -108,11 +108,15 @@ class NewsController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param News $news
+     * @param Request $request
      * @return Response
      */
-    public function destroy($id)
+    public function destroy(News $news, Request $request)
     {
-        //
+        if ($request->ajax()) {
+            $news->delete();
+        }
+
     }
 }

@@ -22,7 +22,11 @@
                 @endforelse
 
             </div>
+            <div class="my-5">
+                {{ $newsList->links() }}
+            </div>
         </div>
+
     </div>
 @endsection
 
