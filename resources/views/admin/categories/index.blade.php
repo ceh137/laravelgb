@@ -59,7 +59,7 @@
                                             <a href="{{ route('admin.categories.edit', $category) }}" type="button" rel="tooltip" title="Edit Task" class="btn btn-primary btn-link btn-sm">
                                                 <i class="material-icons">edit</i>
                                             </a>
-                                            <a href="{{ route('admin.categories.destroy', $category) }}" type="button" rel="tooltip" title="Remove" class="btn btn-danger btn-link btn-sm">
+                                            <a href="javascript:" type="button" rel="tooltip" title="Remove" data-id="{{ $category->id }}" class="btn btn-danger btn-link btn-sm delete">
                                                 <i class="material-icons">delete</i>
                                             </a>
                                         </td>
@@ -86,3 +86,26 @@
         </div>
     </div>
 @endsection
+@push('js')
+    <script>
+        $(function () {
+            $('.delete').on('click', function () {
+                let  id = $(this).data('id');
+                if (confirm("Confirm delete ?")) {
+                    $.ajax({
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        type: 'DELETE',
+                        url: '/admin/categories/' + id,
+                        complete: function ()  {
+                            //alert("Category with id  = "+  id + " was deleted");
+                            location.reload();
+                        }
+                    })
+                }
+            })
+        })
+    </script>
+@endpush
+

@@ -96,9 +96,10 @@ class CategoryController extends Controller
      * @param Category $category
      * @return Response
      */
-    public function destroy(Category $category)
+    public function destroy(Category $category, Request  $request)
     {
+
         $category->delete();
-        return redirect()->route('admin.categories.index')->with('success', 'Запись с ID ='.$category->id.' была удалена');
+        return redirect()->route('admin.categories.index')->with('success', 'Запись с ID = '.$category->id.' была удалена');
     }
 }

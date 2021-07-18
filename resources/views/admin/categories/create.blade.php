@@ -13,7 +13,7 @@
                             <form method="post" action="{{ route('admin.categories.store') }}">
                                 @csrf
                                 <div class="form-group my-5">
-                                    <input type="text" name="name" class="form-control" placeholder="Title">
+                                    <input type="text" name="title" class="form-control" placeholder="Title">
                                 </div>
                                 <div class="form-group my-5">
                                     <textarea type="text" name="desc" class="form-control" placeholder="Description"></textarea>
