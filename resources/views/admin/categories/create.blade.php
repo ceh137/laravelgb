@@ -9,7 +9,14 @@
                             <h4 class="card-title ">Create Category</h4>
                             <p class="card-category">Here you can create new category</p>
                         </div>
-                        <div class=" mx-auto p-5">
+                        <div class=" mx-1 p-5">
+                            @if($errors->any())
+                                @foreach($errors->all() as $error)
+                                    <div class="alert alert-danger">
+                                        {{ $error }}
+                                    </div>
+                                @endforeach
+                            @endif
                             <form method="post" action="{{ route('admin.categories.store') }}">
                                 @csrf
                                 <div class="form-group my-5">

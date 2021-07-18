@@ -9,7 +9,7 @@
                             <h4 class="card-title ">Create News</h4>
                             <p class="card-category">Here you can create relevant news</p>
                         </div>
-                        <div class=" mx-auto p-5">
+                        <div class=" mx-1 p-5">
                             @if($errors->any())
                                 @foreach($errors->all() as $error)
                                     <div class="alert alert-danger">
