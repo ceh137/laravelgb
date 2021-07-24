@@ -22,7 +22,8 @@ class NewsController extends Controller
      */
     public function index()
     {
-        $news = News::with('category')->orderBy('updated_at', 'desc')->paginate(20);
+        $news = News::with('category')->with('status')->orderBy('updated_at', 'desc')->paginate(20);
+
         return view('admin.news.index', ['newsList' => $news]);
     }
 

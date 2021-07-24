@@ -22,10 +22,10 @@ class UsersSeeder extends Seeder
 
         for ($i = 0; $i < 30; $i++) {
             $data[] = [
-                'login' => $faker->userName,
-                'pass' => md5($faker->sentence(1)),
+                'name' => $faker->userName,
+                'password' => md5($faker->sentence(1)),
                 'status_id' => mt_rand(1,3),
-                'mail' => $faker->email,
+                'email' => $faker->email,
                 'created_at' => now(),
                 'updated_at' => now()
 
