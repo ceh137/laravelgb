@@ -58,6 +58,12 @@
                         <p>Users</p>
                     </a>
                 </li>
+                <li class="nav-item @if(request()->routeIs('admin.parse.*')) active @endif">
+                    <a class="nav-link" href="{{ route('admin.parse.index') }}">
+                        <i class="material-icons">download</i>
+                        <p>Parser</p>
+                    </a>
+                </li>
             </ul>
         </div>
     </div>

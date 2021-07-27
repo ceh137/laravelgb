@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateNewsStatusesTable extends Migration
+class AddAvatarFieldForUsersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,8 @@ class CreateNewsStatusesTable extends Migration
      */
     public function up()
     {
-        Schema::create('news_statuses', function (Blueprint $table) {
-            $table->id();
-            $table->string('news_status_name', 255);
+        Schema::table('users', function (Blueprint $table) {
+            $table->string('avatar', '256');
         });
     }
 
@@ -26,6 +25,8 @@ class CreateNewsStatusesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('news_statuses');
+        Schema::table('users', function (Blueprint $table) {
+            $table->dropColumn('avatar');
+        });
     }
 }

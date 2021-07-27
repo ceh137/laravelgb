@@ -6,10 +6,10 @@
         <div class="col-md-4">
             <div class="portlet light profile-sidebar-portlet bordered">
                 <div class="profile-userpic">
-                    <img src="https://bootdey.com/img/Content/avatar/avatar6.png" class="img-responsive" alt=""> </div>
+                    <img src="{{  Auth::user()->avatar }}" class="img-responsive" alt=""> </div>
                 <div class="profile-usertitle">
-                    <div class="profile-usertitle-name"> Marcus Doe </div>
-                    <div class="profile-usertitle-job"> Developer </div>
+                    <div class="profile-usertitle-name"> {{  Auth::user()->name }} </div>
+                    <div class="profile-usertitle-job"> {{  Auth::user()->email }} </div>
                 </div>
                 <div class="profile-userbuttons">
                     <button type="button" class="btn btn-info  btn-sm">Follow</button>
