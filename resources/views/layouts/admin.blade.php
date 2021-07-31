@@ -19,6 +19,11 @@
     <link href="{{ asset('assets/admin/css/material-dashboard.css?v=2.1.2') }}" rel="stylesheet" />
     <!-- CSS Just for demo purpose, don't include it in your project -->
     <link href="{{ asset('assets/admin/demo/demo.css') }}" rel="stylesheet" />
+    <style>
+        .ck-content {
+            height: 400px;
+        }
+    </style>
 </head>
 
 <body class="">
@@ -62,6 +67,12 @@
                     <a class="nav-link" href="{{ route('admin.parse.index') }}">
                         <i class="material-icons">download</i>
                         <p>Parser</p>
+                    </a>
+                </li>
+                <li class="nav-item @if(request()->routeIs('admin.source.*')) active @endif">
+                    <a class="nav-link" href="{{ route('admin.source.index') }}">
+                        <i class="material-icons">source</i>
+                        <p>Sources</p>
                     </a>
                 </li>
             </ul>
@@ -393,6 +404,14 @@
         md.initDashboardPageCharts();
 
     });
+</script>
+<script src="https://cdn.ckeditor.com/ckeditor5/29.0.0/classic/ckeditor.js"></script>
+    <script>
+        ClassicEditor
+        .create( document.querySelector( '#editor' ) )
+        .catch( error => {
+        console.error( error );
+    } );
 </script>
 @stack('js')
 </body>

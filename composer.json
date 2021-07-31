@@ -16,7 +16,8 @@
         "laravel/tinker": "^2.5",
         "laravel/ui": "^3.3",
         "orchestra/parser": "^6.1",
-        "socialiteproviders/vkontakte": "^4.2"
+        "socialiteproviders/vkontakte": "^4.2",
+      "ext-xml": "*"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.6",

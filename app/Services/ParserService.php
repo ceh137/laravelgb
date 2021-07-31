@@ -5,11 +5,12 @@ use App\Models\Category;
 use App\Models\News;
 use Illuminate\Database\Eloquent\Model;
 
+
 class ParserService implements ParserContract
 {
-    public function getParsedMaterial(array $url): array
+    public function getParsedMaterial(string $url): array
     {
-        $url = $url['url'];
+
         $xml = \XmlParser::load($url);
 
         $data = $xml->parse([

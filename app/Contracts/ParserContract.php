@@ -4,7 +4,7 @@ namespace App\Contracts;
 
 interface ParserContract
 {
-    public function getParsedMaterial(array $url): array;
+    public function getParsedMaterial(string $url): array;
 
     public function storeParsedMaterial(array $parsedMaterial): bool;
 }

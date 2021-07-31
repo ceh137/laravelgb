@@ -35,7 +35,7 @@
 
                                     <div class="form-group">
                                         <label class="bmd-label-floating">Article</label>
-                                        <textarea class="form-control" name="article" rows="5">{{ $news->article }}</textarea>
+                                        <textarea class="form-control" name="article" id="editor"  rows="5" >{{ $news->article }}</textarea>
                                     </div>
                                 </div>
                                 <div class="form-group">
