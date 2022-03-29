@@ -22,6 +22,7 @@
         "sass-loader": "^11.0.1"
     },
     "dependencies": {
-        "@ckeditor/ckeditor5-build-balloon-block": "^29.0.0"
+        "@ckeditor/ckeditor5-build-balloon-block": "^29.0.0",
+        "@ckeditor/ckeditor5-easy-image": "^29.0.0"
     }
 }

@@ -11,6 +11,7 @@ use \App\Http\Controllers\Account\IndexController;
 use \App\Http\Controllers\Auth\SocialController;
 use \App\Http\Controllers\SourceController;
 use \App\Http\Controllers\ParseNewsController;
+use \UniSharp\LaravelFilemanager\Lfm;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -51,9 +52,12 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('parse/index', [ParserController::class,  'index'])->name('parse.index');
         Route::post('parse/save', [ParserController::class,  'save'])->name('parse.save');
 
+
     } );
 });
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-
+Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web', 'auth']], function () {
+    Lfm::routes();
+});
 Auth::routes();

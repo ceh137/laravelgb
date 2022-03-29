@@ -13,8 +13,9 @@ class ParseNewsController extends Controller
         //dd($sources);
         foreach ($sources as $source){
             dump(gettype($source->url));
-            $this->dispatch(new NewsJob($source->url));
+            NewsJob::dispatch($source->url);
         }
-        return "Данные успешно скачаны";
+
+        return 'news are updating';
     }
 }

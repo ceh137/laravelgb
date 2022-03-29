@@ -405,13 +405,24 @@
 
     });
 </script>
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/ckeditor/4.5.11/ckeditor.js"></script>
+
 <script src="https://cdn.ckeditor.com/ckeditor5/29.0.0/classic/ckeditor.js"></script>
-    <script>
-        ClassicEditor
-        .create( document.querySelector( '#editor' ) )
-        .catch( error => {
-        console.error( error );
-    } );
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/ckeditor/4.5.11/adapters/jquery.js"></script>
+<script>
+    var route_prefix = "/filemanager";
+    $('#editor').ckeditor({
+        height: 100,
+        filebrowserImageBrowseUrl: route_prefix + '?type=Images',
+        filebrowserImageUploadUrl: route_prefix + '/upload?type=Images&_token={{csrf_token()}}',
+        filebrowserBrowseUrl: route_prefix + '?type=Files',
+        filebrowserUploadUrl: route_prefix + '/upload?type=Files&_token={{csrf_token()}}'
+    });
+</script>
+
+
 </script>
 @stack('js')
 </body>
