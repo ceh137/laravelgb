@@ -3,10 +3,13 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\NewsStoreRequest;
+use App\Http\Requests\NewsUpdateRequest;
 use App\Models\Category;
 use App\Models\News;
 use App\Models\NewsStatus;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
@@ -19,7 +22,8 @@ class NewsController extends Controller
      */
     public function index()
     {
-        $news = News::with('category')->orderBy('updated_at', 'desc')->paginate(20);
+        $news = News::with('category')->with('status')->orderBy('updated_at', 'desc')->paginate(20);
+
         return view('admin.news.index', ['newsList' => $news]);
     }
 
@@ -30,29 +34,28 @@ class NewsController extends Controller
      */
     public function create()
     {
-        return view("admin.news.create", ['categories' => Category::select('id', 'name')->get()]);
+        return view("admin.news.create", [
+                'categories' => Category::select('id', 'name')->get(),
+                'statuses' => NewsStatus::all()
+            ]);
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\RedirectResponse
+     * @param NewsStoreRequest $request
+     * @return RedirectResponse
      */
-    public function store(Request $request)
+    public function store(NewsStoreRequest $request)
     {
         $news = new News();
-        $news->title = $request->title;
-        $news->article = $request->article;
-        $news->status_id = $request->status_id;
-        $news->category_id = $request->category;
-        $news->source_id = $request->source;
+        $news->fill($request->validated());
 
         if ($news->save())
         {
             return redirect()->route('admin.news.index')->with('success', 'Запись с ID = '.$news->id.' была успешно добавлена');
         }
-        return redirect()->route('admin.news.index')->with('success', 'Ошибка');
+        return redirect()->route('admin.news.index')->with('error', 'Ошибка, запись не была добавлена');
 
     }
 
@@ -85,34 +88,37 @@ class NewsController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\RedirectResponse
+     * @param NewsUpdateRequest $request
+     * @param News $news
+     * @return RedirectResponse
      */
-    public function update(Request $request, News $news)
+    public function update(NewsUpdateRequest $request, News $news)
     {
 
-        $news->title = $request->title;
-        $news->article = $request->article;
-        $news->status_id = $request->status_id;
-        $news->category_id = $request->category_id;
-        $news->source_id = $request->source_id;
+        $news->fill($request->validated());
 
         if ($news->save())
         {
             return redirect()->route('admin.news.index')->with('success', 'Запись с ID = '.$news->id.' была успешно обновлена');
         }
-        return redirect()->route('admin.news.index')->with('success', 'Ошибка, запись не была обновлена');
+        return redirect()->route('admin.news.index')->with('error', 'Ошибка, запись не была обновлена');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param News $news
+     * @param Request $request
      * @return Response
      */
-    public function destroy($id)
+    public function destroy(News $news, Request $request)
     {
-        //
+        if ($request->ajax()){
+            $news->delete();
+            return redirect()->route('admin.news.index')->with('success', 'Запись с ID = '.$news->id.' была удалена');
+        }
+
+
+
     }
 }

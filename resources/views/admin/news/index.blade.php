@@ -10,6 +10,7 @@
                             <p class="card-category">Here you can see all the news on the website</p>
                         </div>
                         <div class="card-body">
+                            @include('admin.components.success')
                             <div class="table-responsive">
                                 <table class="table">
                                     <thead class=" text-primary">
@@ -42,7 +43,7 @@
                                                 {{ $news->title }}
                                             </td>
                                             <td>
-                                                {{ $news->category->name }}
+                                                {{ $news->category->name ?? 'Нет'}}
                                             </td>
                                             <td>
                                                 {{ $news->status->news_status_name }}
@@ -54,7 +55,7 @@
                                                 <a href="{{ route('admin.news.edit',  ['news' => $news]) }}"  rel="tooltip" title="Edit Task" class="btn btn-primary btn-link btn-sm">
                                                     <i class="material-icons">edit</i>
                                                 </a>
-                                                <a href="{{ route('admin.news.destroy', ['news' =>  $news]) }}"  rel="tooltip" title="Remove" class="btn btn-danger btn-link btn-sm">
+                                                <a href="javascript:" data-id = '{{ $news->id }}'   rel="tooltip" title="Remove" class="btn btn-danger btn-link btn-sm delete">
                                                     <i class="material-icons">delete</i>
                                                 </a>
                                             </td>
@@ -81,4 +82,26 @@
         </div>
     </div>
 @endsection
+@push('js')
+    <script>
+        $(function () {
+            $('.delete').on('click', function () {
+                let  id = $(this).data('id');
+                if (confirm("Confirm delete ?")) {
+                    $.ajax({
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        type: 'DELETE',
+                        url: '/admin/news/' + id,
+                        complete: function ()  {
+                            //alert("News with id  = "+  id + " was deleted");
+                            location.reload();
+                        }
+                    })
+                }
+            })
+        })
+    </script>
+@endpush
 

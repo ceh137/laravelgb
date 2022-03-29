@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\CategoryStoreRequest;
+use App\Http\Requests\CategoryUpdateRequest;
 use App\Models\Category;
 use App\Models\News;
 use Illuminate\Http\Request;
@@ -37,9 +39,11 @@ class CategoryController extends Controller
      * @param Request $request
      * @return Response
      */
-    public function store(Request $request)
+    public function store(CategoryStoreRequest $request)
     {
+        $request = $request->validated();
         $category = new Category();
+
         $category->name = $request->title;
         $category->desc =  $request->desc;
 
@@ -79,10 +83,10 @@ class CategoryController extends Controller
      * @param Category $category
      * @return Response
      */
-    public function update(Request $request, Category $category)
+    public function update(CategoryUpdateRequest $request, Category $category)
     {
-
-        $category->fill($request->only('name', 'desc'));
+        $request = $request->validated();
+        $category->fill($request);
 
         if ($category->save()) {
             return redirect()->route('admin.categories.index')->with('success', 'Запись с ID ='.$category->id.' была обновлена');
@@ -96,9 +100,10 @@ class CategoryController extends Controller
      * @param Category $category
      * @return Response
      */
-    public function destroy(Category $category)
+    public function destroy(Category $category, Request  $request)
     {
+
         $category->delete();
-        return redirect()->route('admin.categories.index')->with('success', 'Запись с ID ='.$category->id.' была удалена');
+        return redirect()->route('admin.categories.index')->with('success', 'Запись с ID = '.$category->id.' была удалена');
     }
 }

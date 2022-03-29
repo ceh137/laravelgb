@@ -23,5 +23,10 @@
 
             </div>
         </div>
+
+        <div class="float-right">
+            {{ $categoryList->links() }}
+        </div>
     </div>
 @endsection
+

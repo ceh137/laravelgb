@@ -9,14 +9,21 @@
     <title>
          Dashboard
     </title>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport' />
     <!--     Fonts and icons     -->
     <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
+    <script   src="https://code.jquery.com/jquery-3.6.0.js"   integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="   crossorigin="anonymous"></script>
     <!-- CSS Files -->
     <link href="{{ asset('assets/admin/css/material-dashboard.css?v=2.1.2') }}" rel="stylesheet" />
     <!-- CSS Just for demo purpose, don't include it in your project -->
     <link href="{{ asset('assets/admin/demo/demo.css') }}" rel="stylesheet" />
+    <style>
+        .ck-content {
+            height: 400px;
+        }
+    </style>
 </head>
 
 <body class="">
@@ -50,40 +57,22 @@
                         <p>Categories</p>
                     </a>
                 </li>
-                <li class="nav-item ">
-                    <a class="nav-link" href="./typography.html">
-                        <i class="material-icons">library_books</i>
-                        <p>Typography</p>
+                <li class="nav-item @if(request()->routeIs('admin.users.*')) active @endif">
+                    <a class="nav-link" href="{{ route('admin.users.index') }}">
+                        <i class="material-icons">content_paste</i>
+                        <p>Users</p>
                     </a>
                 </li>
-                <li class="nav-item ">
-                    <a class="nav-link" href="./icons.html">
-                        <i class="material-icons">bubble_chart</i>
-                        <p>Icons</p>
+                <li class="nav-item @if(request()->routeIs('admin.parse.*')) active @endif">
+                    <a class="nav-link" href="{{ route('admin.parse.index') }}">
+                        <i class="material-icons">download</i>
+                        <p>Parser</p>
                     </a>
                 </li>
-                <li class="nav-item ">
-                    <a class="nav-link" href="./map.html">
-                        <i class="material-icons">location_ons</i>
-                        <p>Maps</p>
-                    </a>
-                </li>
-                <li class="nav-item ">
-                    <a class="nav-link" href="./notifications.html">
-                        <i class="material-icons">notifications</i>
-                        <p>Notifications</p>
-                    </a>
-                </li>
-                <li class="nav-item ">
-                    <a class="nav-link" href="./rtl.html">
-                        <i class="material-icons">language</i>
-                        <p>RTL Support</p>
-                    </a>
-                </li>
-                <li class="nav-item active-pro ">
-                    <a class="nav-link" href="./upgrade.html">
-                        <i class="material-icons">unarchive</i>
-                        <p>Upgrade to PRO</p>
+                <li class="nav-item @if(request()->routeIs('admin.source.*')) active @endif">
+                    <a class="nav-link" href="{{ route('admin.source.index') }}">
+                        <i class="material-icons">source</i>
+                        <p>Sources</p>
                     </a>
                 </li>
             </ul>
@@ -416,6 +405,26 @@
 
     });
 </script>
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/ckeditor/4.5.11/ckeditor.js"></script>
+
+<script src="https://cdn.ckeditor.com/ckeditor5/29.0.0/classic/ckeditor.js"></script>
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/ckeditor/4.5.11/adapters/jquery.js"></script>
+<script>
+    var route_prefix = "/filemanager";
+    $('#editor').ckeditor({
+        height: 100,
+        filebrowserImageBrowseUrl: route_prefix + '?type=Images',
+        filebrowserImageUploadUrl: route_prefix + '/upload?type=Images&_token={{csrf_token()}}',
+        filebrowserBrowseUrl: route_prefix + '?type=Files',
+        filebrowserUploadUrl: route_prefix + '/upload?type=Files&_token={{csrf_token()}}'
+    });
+</script>
+
+
+</script>
+@stack('js')
 </body>
 
 </html>
